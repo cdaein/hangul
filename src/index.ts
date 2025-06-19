@@ -4,7 +4,7 @@
  * Hangul Syllables, Jamo, Jamo Extended-A and Jamo Extended-B ranges are checked.
  * Halfwidth jamo range is not checked.
  *
- * @param char - a single character to check
+ * @param ch - a single character to check
  */
 export const isHangul = (ch: string) => {
   const code = ch.charCodeAt(0);
