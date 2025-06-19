@@ -11,22 +11,24 @@ import { assemble as eshAssemble } from "es-hangul";
  * assemble(["ㅁ", "ㅗ", "ㅏ", "ㄹ", "ㄱ"]) // "뫍"
  * assemble(["ㅂ", "ㅂ", "ㅏ"]) // "ㅂ바"
  * assemble(["ㅁ", "ㅣ", "ㅋ", "ㅣ", "17"]) // "미키17"
+ * assemble(["미키", "17"]) // "미키17"
  * ```
  */
 export const assemble = (strArr: string[]) => {
+  const str = strArr.join("");
   const result = [];
   let i = 0;
 
   // collect consecutive Hangul chars until it sees non-Hangul char
-  while (i < strArr.length) {
-    const ch = strArr[i];
+  while (i < str.length) {
+    const ch = str[i];
     if (isHangul(ch)) {
       // Collect consecutive Hangul characters
       const hangulChars = [ch];
       let j = i + 1;
 
-      while (j < strArr.length && isHangul(strArr[j])) {
-        hangulChars.push(strArr[j]);
+      while (j < str.length && isHangul(str[j])) {
+        hangulChars.push(str[j]);
         j++;
       }
       // Assemble the consecutive Hangul characters
