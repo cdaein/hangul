@@ -14,11 +14,19 @@ export const isHangul = (ch: string) => {
   // Hangul Compatibility Jamo: 3130–318F
   // Hangul Jamo Extended-A: A960–A97F
   // Hangul Jamo Extended-B: D7B0–D7FF
-  return (
-    (code >= 0xac00 && code <= 0xd7af) || // Hangul Syllables
-    (code >= 0x1100 && code <= 0x11ff) || // Hangul Jamo
-    (code >= 0x3130 && code <= 0x318f) || // Hangul Compatibility Jamo
-    (code >= 0xa960 && code <= 0xa97f) || // Hangul Jamo Extended-A
-    (code >= 0xd7b0 && code <= 0xd7ff) // Hangul Jamo Extended-B
+  // return (
+  //   (code >= 0xac00 && code <= 0xd7af) || // Hangul Syllables
+  //   (code >= 0x1100 && code <= 0x11ff) || // Hangul Jamo
+  //   (code >= 0x3130 && code <= 0x318f) || // Hangul Compatibility Jamo
+  //   (code >= 0xa960 && code <= 0xa97f) || // Hangul Jamo Extended-A
+  //   (code >= 0xd7b0 && code <= 0xd7ff) // Hangul Jamo Extended-B
+  // );
+
+  if (ch.length > 1) {
+    console.warn(`Only the first character ("${ch[0]}") will be processed.`);
+    ch = ch[0];
+  }
+  return /[\u1100-\u11FF\u3130-\u318F\uA960-\uA97F\uAC00-\uD7AF\uD7B0-\uD7FF]/.test(
+    ch,
   );
 };
