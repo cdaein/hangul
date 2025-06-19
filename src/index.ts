@@ -1,3 +1,34 @@
+import { assemble as eshAssemble } from "es-hangul";
+
+export const assemble = (strArr: string[]) => {
+  const result = [];
+  let i = 0;
+
+  // collect consecutive Hangul chars until it sees non-Hangul char
+  while (i < strArr.length) {
+    const ch = strArr[i];
+    if (isHangul(ch)) {
+      // Collect consecutive Hangul characters
+      const hangulChars = [ch];
+      let j = i + 1;
+
+      while (j < strArr.length && isHangul(strArr[j])) {
+        hangulChars.push(strArr[j]);
+        j++;
+      }
+      // Assemble the consecutive Hangul characters
+      result.push(eshAssemble(hangulChars));
+      i = j; // Move index to after the Hangul sequence
+    } else {
+      // Pass non-Hangul characters as is
+      result.push(ch);
+      i++;
+    }
+  }
+
+  return result.join("");
+};
+
 /**
  * Takes in a single character and determine if it's hangul or not
  * It compares with Hangul [Unicode chart](https://www.unicode.org/charts/).

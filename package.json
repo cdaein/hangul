@@ -37,5 +37,8 @@
   "bugs": {
     "url": "https://github.com/cdaein/hangul/issues"
   },
-  "homepage": "https://github.com/cdaein/hangul#readme"
+  "homepage": "https://github.com/cdaein/hangul#readme",
+  "dependencies": {
+    "es-hangul": "^2.3.3"
+  }
 }
