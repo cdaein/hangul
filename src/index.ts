@@ -1,5 +1,18 @@
 import { assemble as eshAssemble } from "es-hangul";
 
+/**
+ * Assemble input string (in array form).
+ * Hangul characters will be assembled into complete syllables. For non-existing combinations, they will be returned as individual jaso elements. Non-Hangul characters are returned as is.
+ *
+ * @param strArr - string (in array form) to assemble
+ *
+ * @example
+ * ```ts
+ * assemble(["ㅁ", "ㅗ", "ㅏ", "ㄹ", "ㄱ"]) // "뫍"
+ * assemble(["ㅂ", "ㅂ", "ㅏ"]) // "ㅂ바"
+ * assemble(["ㅁ", "ㅣ", "ㅋ", "ㅣ", "17"]) // "미키17"
+ * ```
+ */
 export const assemble = (strArr: string[]) => {
   const result = [];
   let i = 0;

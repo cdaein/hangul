@@ -11,7 +11,7 @@ import { assemble, isHangul } from "../src";
 
 describe("assemble()", () => {
   test("assembles multiple Hangul jaso combinations", () => {
-    expect(assemble(["ㅁ", "ㅏ", "ㄹ", "ㄱ"])).toBe("맑");
+    expect(assemble(["ㅁ", "ㅗ", "ㅏ", "ㄹ", "ㄱ"])).toBe("뫍");
     expect(assemble(["ㄱ", "ㅗ", "ㅏ"])).toBe("과");
   });
 
@@ -23,7 +23,7 @@ describe("assemble()", () => {
 
   test("returns non-Hangul as is", () => {
     expect(assemble(["a", "모", "ㅁ"])).toBe("a몸");
-    expect(assemble(["ㅁ", "ㅏ", "3", "ㅗ"])).toBe("마3ㅗ");
+    expect(assemble(["ㅁ", "ㅣ", "ㅋ", "ㅣ", "17"])).toBe("미키17");
   });
 
   test("returns space, empty string and punctuations as is", () => {
