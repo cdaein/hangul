@@ -12,7 +12,8 @@
     "watch": "tsc --watch",
     "test": "vitest",
     "demo": "vite ./demo",
-    "build": "tsc --noemit && tsup"
+    "build": "tsc --noemit && tsup",
+    "prepublishOnly": "npm run build"
   },
   "author": "Daeinc",
   "license": "MIT",
