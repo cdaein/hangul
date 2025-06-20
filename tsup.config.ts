@@ -19,7 +19,7 @@ export default defineConfig([
   // es6 module (bundled)
   {
     entry: {
-      hangul: "./src/index.ts",
+      index: "./src/index.ts",
     },
     format: ["esm"],
     outDir: "dist",
