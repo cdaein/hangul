@@ -18,6 +18,7 @@
   "author": "Daeinc",
   "license": "MIT",
   "devDependencies": {
+    "esbuild-plugin-license": "^1.2.3",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
