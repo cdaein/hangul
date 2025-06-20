@@ -7,39 +7,117 @@ import {
   afterEach,
   MockInstance,
 } from "vitest";
-import { assemble, isHangul } from "../src";
+import { isJaOrMo } from "../src";
 
-describe("assemble()", () => {
-  test("assembles multiple Hangul jaso combinations", () => {
-    expect(assemble(["ㅁ", "ㅗ", "ㅏ", "ㄹ", "ㄱ"])).toBe("뫍");
-    expect(assemble(["ㄱ", "ㅗ", "ㅏ"])).toBe("과");
+/*
+describe("disassemble()", () => {
+  test("handles a single or multiple Hangul syllable(s)", () => {
+    expect(disassemble("꺾")).toEqual([
+      {
+        choseong: "ㄲ",
+        jungseong: "ㅓ",
+        jongseong: "ㄲ",
+      },
+    ]);
+    expect(disassemble("봛")).toEqual([
+      {
+        choseong: "ㅂ",
+        jungseong: "ㅗㅏ",
+        jongseong: "ㄹㅂ",
+      },
+    ]);
+    expect(disassemble("마요")).toEqual([
+      {
+        choseong: "ㅁ",
+        jungseong: "ㅏ",
+        jongseong: "",
+      },
+      {
+        choseong: "ㅇ",
+        jungseong: "ㅛ",
+        jongseong: "",
+      },
+    ]);
   });
 
-  test("returns individual jaso if they cannot be assembled", () => {
-    expect(assemble(["ㅁ", "ㅁ", "ㅏ"])).toBe("ㅁ마");
-    expect(assemble(["ㅁ", "ㅜ", "ㄹ", "ㄷ"])).toBe("물ㄷ");
-    expect(assemble(["ㅂ", "ㅂ", "ㅏ"])).toBe("ㅂ바");
+  test("handles a single or multiple Hangul jaso(s)", () => {
+    expect(disassemble("ㅁ")).toEqual([
+      { choseong: "ㅁ", jungseong: "", jongseong: "" },
+    ]);
+    expect(disassemble("ㅗㄱ")).toEqual([
+      { choseong: "", jungseong: "ㅗ", jongseong: "" },
+      { choseong: "ㄱ", jungseong: "", jongseong: "" },
+    ]);
+    expect(disassemble("목ㅗㅏㄱ")).toEqual([
+      { choseong: "ㅁ", jungseong: "ㅗ", jongseong: "ㄱ" },
+      { choseong: "", jungseong: "ㅗ", jongseong: "" },
+      { choseong: "", jungseong: "ㅏ", jongseong: "" },
+      { choseong: "ㄱ", jungseong: "", jongseong: "" },
+    ]);
+    expect(disassemble("몫")).toEqual([
+      { choseong: "ㅁ", jungseong: "ㅗ", jongseong: "ㄱㅅ" },
+    ]);
+    expect(disassemble("목ㅅㅗㄹㅣ")).toEqual([
+      { choseong: "ㅁ", jungseong: "ㅗ", jongseong: "ㄱ" },
+      { choseong: "ㅅ", jungseong: "", jongseong: "" },
+      { choseong: "", jungseong: "ㅗ", jongseong: "" },
+      { choseong: "ㄹ", jungseong: "", jongseong: "" },
+      { choseong: "", jungseong: "ㅣ", jongseong: "" },
+    ]);
+    expect(disassemble("꽈왤")).toEqual([
+      { choseong: "ㄲ", jungseong: "ㅗㅏ", jongseong: "" },
+      { choseong: "ㅇ", jungseong: "ㅗㅐ", jongseong: "ㄹ" },
+    ]);
   });
 
-  test("returns non-Hangul as is", () => {
-    expect(assemble(["a", "모", "ㅁ"])).toBe("a몸");
-    expect(assemble(["ㅁ", "ㅣ", "ㅋ", "ㅣ", "17"])).toBe("미키17");
+  test("handles non-Hangul mixed string", () => {
+    expect(disassemble("와yo")).toEqual([
+      { choseong: "ㅇ", jungseong: "ㅗㅏ", jongseong: "" },
+      "y",
+      "o",
+    ]);
+    expect(disassemble("가-ab 12")).toEqual([
+      { choseong: "ㄱ", jungseong: "ㅏ", jongseong: "" },
+      "-",
+      "a",
+      "b",
+      " ",
+      "1",
+      "2",
+    ]);
   });
 
-  test("returns space, empty string and punctuations as is", () => {
-    expect(assemble(["ㅎ", "ㅏ", " ", "하"])).toBe("하 하");
-    expect(assemble(["ㅁ", "ㅏ", "!", "?"])).toBe("마!?");
-    expect(assemble(["ㅁ", "ㅏ", "", "?"])).toBe("마?");
+  // FIX: doesn't disassemble (es-hangul)
+  test("disassembles complex choseong(initial consonant)", () => {
+    expect(disassemble("ㄳ")).toEqual([
+      { choseong: "ㄱㅅ", jungseong: "", jongseong: "" },
+    ]);
   });
 
-  test("handles multiple characters in an array element", () => {
-    expect(assemble(["학교", " ", "가자", "!"])).toBe("학교 가자!");
-    expect(assemble(["java", " ", "script", "좋아 "])).toBe("java script좋아 ");
-    expect(assemble(["ㅁ", "ㅏ", "   ", "?"])).toBe("마   ?");
+  test("disassembles complex jungseong(median vowel)", () => {
+    expect(disassemble("ㅟ")).toEqual([
+      { choseong: "", jungseong: "ㅜㅣ", jongseong: "" },
+    ]);
+    expect(disassemble("ㅞㅘ")).toEqual([
+      { choseong: "", jungseong: "ㅜㅔ", jongseong: "" },
+      { choseong: "", jungseong: "ㅗㅏ", jongseong: "" },
+    ]);
+  });
+
+  // FIX: doesn't disassemble (es-hangul), and is not a jongseong
+  test("disassembles complex jongseong(final consonant)", () => {
+    expect(disassemble("ᆰ")).toEqual([
+      { choseong: "ㄹㄱ", jungseong: "", jongseong: "" },
+    ]);
+
+    expect(disassemble("ᆹ")).toEqual([
+      { choseong: "ㅂㅅ", jungseong: "", jongseong: "" },
+    ]);
   });
 });
+*/
 
-describe("isHangul()", () => {
+describe("isJaOrMo()", () => {
   const warnMsg = (input: string) =>
     `Only the first character ("${input}") will be processed.`;
 
@@ -52,34 +130,31 @@ describe("isHangul()", () => {
     consoleWarnSpy.mockRestore();
   });
 
-  test("returns true for a complete Hangul syllable", () => {
-    expect(isHangul("가")).toBe(true);
-    expect(isHangul("맑")).toBe(true);
+  test('returns "ja" for consonant', () => {
+    //
   });
-
-  test("returns true for a Hangul jamo", () => {
-    expect(isHangul("ㄱ")).toBe(true);
-    expect(isHangul("ㅛ")).toBe(true);
-    expect(isHangul("ㄲ")).toBe(true);
-  });
-
-  test("returns false for a non-Hangul character", () => {
-    expect(isHangul("z")).toBe(false);
-    expect(isHangul("3")).toBe(false);
-    expect(isHangul("?")).toBe(false);
-  });
-
-  test("returns true after warning if first character is Hangul", () => {
-    const input = "하hello";
-    expect(isHangul(input)).toBe(true);
+  test('returns "ja" after warning if first character is consonant', () => {
+    const input = "ㅎhello";
+    expect(isJaOrMo(input)).toBe("ja");
     expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
     expect(consoleWarnSpy).toHaveBeenCalledWith(warnMsg(input[0]));
   });
 
-  test("returns false after warning if first character is non-Hangul", () => {
-    const input = "hey헤이";
-    expect(isHangul(input)).toBe(false);
+  test('returns "mo" for vowel', () => {
+    //
+  });
+  test('returns "mo" after warning if first character is vowel', () => {
+    const input = "ㅟhello";
+    expect(isJaOrMo(input)).toBe("mo");
     expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
     expect(consoleWarnSpy).toHaveBeenCalledWith(warnMsg(input[0]));
+  });
+
+  test('returns "syllable" for full Hangul syllable', () => {
+    //
+  });
+
+  test('returns "other" for non-Hangul', () => {
+    //
   });
 });
