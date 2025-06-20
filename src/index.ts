@@ -1,4 +1,21 @@
 import { assemble as eshAssemble } from "es-hangul";
+import {
+import {
+  HANGUL_COMPAT_CONSONANT_END_CHARCODE,
+  HANGUL_COMPAT_CONSONANT_START_CHARCODE,
+  HANGUL_COMPAT_JAMO_END_CHARCODE,
+  HANGUL_COMPAT_JAMO_START_CHARCODE,
+  HANGUL_COMPAT_VOWEL_END_CHARCODE,
+  HANGUL_COMPAT_VOWEL_START_CHARCODE,
+  HANGUL_JAMO_END_CHARCODE,
+  HANGUL_JAMO_EXTENDED_A_END_CHARCODE,
+  HANGUL_JAMO_EXTENDED_A_START_CHARCODE,
+  HANGUL_JAMO_EXTENDED_B_END_CHARCODE,
+  HANGUL_JAMO_EXTENDED_B_START_CHARCODE,
+  HANGUL_JAMO_START_CHARCODE,
+  HANGUL_SYLLABLES_END_CHARCODE,
+  HANGUL_SYLLABLES_START_CHARCODE,
+} from "./consonants";
 
 /**
  * Assemble input string (in array form).
@@ -53,20 +70,56 @@ export const assemble = (strArr: string[]) => {
  * @param ch - a single character to check
  */
 export const isHangul = (ch: string) => {
-  const code = ch.charCodeAt(0);
+  if (ch.length > 1) {
+    console.warn(`Only the first character ("${ch[0]}") will be processed.`);
+    ch = ch[0];
+  }
 
-  // Hangul Syllables: AC00–D7AF
-  // Hangul Jamo: 1100–11FF
-  // Hangul Compatibility Jamo: 3130–318F
-  // Hangul Jamo Extended-A: A960–A97F
-  // Hangul Jamo Extended-B: D7B0–D7FF
-  // return (
-  //   (code >= 0xac00 && code <= 0xd7af) || // Hangul Syllables
-  //   (code >= 0x1100 && code <= 0x11ff) || // Hangul Jamo
-  //   (code >= 0x3130 && code <= 0x318f) || // Hangul Compatibility Jamo
-  //   (code >= 0xa960 && code <= 0xa97f) || // Hangul Jamo Extended-A
-  //   (code >= 0xd7b0 && code <= 0xd7ff) // Hangul Jamo Extended-B
-  // );
+  return (
+    isHangulSyllable(ch) ||
+    isHangulJamo(ch) ||
+    isHangulCompatJamo(ch) ||
+    isHangulJamoExtendedA(ch) ||
+    isHangulJamoExtendedB(ch)
+  );
+};
+
+const isHangulSyllable = (ch: string) => {
+  const code = ch.charCodeAt(0);
+  return (
+    code >= HANGUL_SYLLABLES_START_CHARCODE &&
+    code <= HANGUL_SYLLABLES_END_CHARCODE
+  );
+};
+
+const isHangulJamo = (ch: string) => {
+  const code = ch.charCodeAt(0);
+  return code >= HANGUL_JAMO_START_CHARCODE && code <= HANGUL_JAMO_END_CHARCODE;
+};
+
+const isHangulCompatJamo = (ch: string) => {
+  const code = ch.charCodeAt(0);
+  return (
+    code >= HANGUL_COMPAT_JAMO_START_CHARCODE &&
+    code <= HANGUL_COMPAT_JAMO_END_CHARCODE
+  );
+};
+
+const isHangulJamoExtendedA = (ch: string) => {
+  const code = ch.charCodeAt(0);
+  return (
+    code >= HANGUL_JAMO_EXTENDED_A_START_CHARCODE &&
+    code <= HANGUL_JAMO_EXTENDED_A_END_CHARCODE
+  );
+};
+
+const isHangulJamoExtendedB = (ch: string) => {
+  const code = ch.charCodeAt(0);
+  return (
+    code >= HANGUL_JAMO_EXTENDED_B_START_CHARCODE &&
+    code <= HANGUL_JAMO_EXTENDED_B_END_CHARCODE
+  );
+};
 
   if (ch.length > 1) {
     console.warn(`Only the first character ("${ch[0]}") will be processed.`);
