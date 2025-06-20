@@ -2,8 +2,8 @@ import {
   disassemble as eshDisassemble,
   disassembleCompleteCharacter,
 } from "es-hangul";
-import { isHangul } from "../isHangul/isHangul";
-import { isJaOrMo } from "../isJaOrMo/isJaOrMo";
+import { isHangul } from "../isHangul";
+import { isJaOrMo } from "../isJaOrMo";
 
 export interface DisassembledCharacter {
   choseong: string;

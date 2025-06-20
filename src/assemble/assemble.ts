@@ -1,5 +1,5 @@
 import { assemble as eshAssemble } from "es-hangul";
-import { isHangul } from "../isHangul/isHangul";
+import { isHangul } from "../isHangul";
 
 /**
  * Assemble input string (in array form).

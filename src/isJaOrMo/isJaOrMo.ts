@@ -14,7 +14,7 @@ import {
   isHangulJamo,
   isHangulCompatJamo,
   isHangulSyllable,
-} from "../isHangul/isHangul";
+} from "../isHangul";
 
 /**
  * Given a Hangul character, check if it is a consonant(`"ja"`) or vowel(`"mo"`).

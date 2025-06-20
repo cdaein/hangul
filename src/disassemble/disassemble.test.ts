@@ -1,4 +1,4 @@
-import { disassemble } from "./disassemble";
+import { disassemble } from ".";
 import { describe, expect, test } from "vitest";
 
 describe("disassemble()", () => {

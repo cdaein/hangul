@@ -7,7 +7,7 @@ import {
   test,
   expect,
 } from "vitest";
-import { isJaOrMo } from "./isJaOrMo";
+import { isJaOrMo } from ".";
 
 describe("isJaOrMo()", () => {
   const warnMsg = (input: string) =>

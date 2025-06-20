@@ -7,7 +7,7 @@ import {
   afterEach,
   MockInstance,
 } from "vitest";
-import { isHangul } from "./isHangul";
+import { isHangul } from ".";
 
 describe("isHangul()", () => {
   const warnMsg = (input: string) =>

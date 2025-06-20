@@ -1,4 +1,4 @@
-import { assemble } from "./assemble";
+import { assemble } from ".";
 import { describe, test, expect } from "vitest";
 
 describe("assemble()", () => {
