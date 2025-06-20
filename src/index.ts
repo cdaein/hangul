@@ -12,7 +12,13 @@ import {
   HANGUL_JAMO_EXTENDED_A_START_CHARCODE,
   HANGUL_JAMO_EXTENDED_B_END_CHARCODE,
   HANGUL_JAMO_EXTENDED_B_START_CHARCODE,
+  HANGUL_JAMO_FINAL_CONSONANT_START_CHARCODE,
+  HANGUL_JAMO_INITIAL_CONSONANT_START_CHARCODE,
+  HANGUL_JAMO_OLD_FINAL_CONSONANT_END_CHARCODE,
+  HANGUL_JAMO_OLD_INITIAL_CONSONANT_END_CHARCODE,
+  HANGUL_JAMO_OLD_VOWEL_END_CHARCODE,
   HANGUL_JAMO_START_CHARCODE,
+  HANGUL_JAMO_VOWEL_START_CHARCODE,
   HANGUL_SYLLABLES_END_CHARCODE,
   HANGUL_SYLLABLES_START_CHARCODE,
 } from "./consonants";
@@ -121,11 +127,56 @@ const isHangulJamoExtendedB = (ch: string) => {
   );
 };
 
+/**
+ * Given a Hangul character, check if it is a consonant(`"ja"`) or vowel(`"mo"`).
+ * A full Hangul syllable returns `"syllable"`. If non-Hanul, returns `"other"`
+ *
+ * @param ch - a character to test
+ */
+export const isJaOrMo = (ch: string) => {
   if (ch.length > 1) {
     console.warn(`Only the first character ("${ch[0]}") will be processed.`);
     ch = ch[0];
   }
-  return /[\u1100-\u11FF\u3130-\u318F\uA960-\uA97F\uAC00-\uD7AF\uD7B0-\uD7FF]/.test(
-    ch,
-  );
+
+  const code = ch.charCodeAt(0);
+
+  if (isHangulJamo(ch)) {
+    if (
+      (code >= HANGUL_JAMO_INITIAL_CONSONANT_START_CHARCODE &&
+        code <= HANGUL_JAMO_OLD_INITIAL_CONSONANT_END_CHARCODE) ||
+      (code >= HANGUL_JAMO_FINAL_CONSONANT_START_CHARCODE &&
+        code <= HANGUL_JAMO_OLD_FINAL_CONSONANT_END_CHARCODE)
+    ) {
+      return "ja";
+    }
+    if (
+      code >= HANGUL_JAMO_VOWEL_START_CHARCODE &&
+      code <= HANGUL_JAMO_OLD_VOWEL_END_CHARCODE
+    ) {
+      return "mo";
+    }
+  }
+
+  if (isHangulCompatJamo(ch)) {
+    if (
+      code >= HANGUL_COMPAT_CONSONANT_START_CHARCODE &&
+      code <= HANGUL_COMPAT_CONSONANT_END_CHARCODE
+    ) {
+      return "ja";
+    }
+    if (
+      code >= HANGUL_COMPAT_VOWEL_START_CHARCODE &&
+      code <= HANGUL_COMPAT_VOWEL_END_CHARCODE
+    ) {
+      return "mo";
+    }
+  }
+
+  if (isHangulSyllable(ch)) {
+    return "syllable";
+  }
+
+  // Not a Hangul Jamo consonant or vowel
+  return "other";
 };
