@@ -1,15 +1,15 @@
+//========== Hangul Syllables
 /** the first code in Unicode Hangul Syllables table */
 export const HANGUL_SYLLABLES_START_CHARCODE = 0xac00;
 
 /** the last code in Unicode Hangul Syllables table */
 export const HANGUL_SYLLABLES_END_CHARCODE = 0xd7af;
 
+//========== Hangul Compatibility Jamo
 /** the first code in Unicode Hangul Compatibility Jamo table */
 export const HANGUL_COMPAT_JAMO_START_CHARCODE = 0x3130;
 
-/**
- * the last code in Unicode Hangul Compatibility Jamo table
- */
+/* the last code in Unicode Hangul Compatibility Jamo table */
 export const HANGUL_COMPAT_JAMO_END_CHARCODE = 0x318f;
 
 /** 'ㄱ', the first consonant in Unicode Hangul Compatibility Jamo table */
@@ -36,6 +36,50 @@ export const HANGUL_COMPAT_OLD_VOWEL_START_CHARCODE = 0x3187;
 /** 'ㆎ', the first vowel in Unicode Hangul Compatibility Jamo table */
 export const HANGUL_COMPAT_OLD_VOWEL_END_CHARCODE = 0x318e;
 
+//========== Hangul Jamo
+/** the first code in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_START_CHARCODE = 0x1100;
+
+/** the last code in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_END_CHARCODE = 0x11ff;
+
+/** 'ᄀ', the first initial consonant (choseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_INITIAL_CONSONANT_START_CHARCODE = 0x1100;
+
+/** 'ᄒ', the last initial consonant (choseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_INITIAL_CONSONANT_END_CHARCODE = 0x1112;
+
+/** NIEUN-KIYEOK, the first old initial consonant (choseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_OLD_INITIAL_CONSONANT_START_CHARCODE = 0x1113;
+
+/** TIKEUT-RIEUL, the last old initial consonant (choseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_OLD_INITIAL_CONSONANT_END_CHARCODE = 0x115e;
+
+/** A, the first medial vowel (jungseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_VOWEL_START_CHARCODE = 0x1161;
+
+/** I, the last medial vowel (jungseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_VOWEL_END_CHARCODE = 0x1175;
+
+/** A-O, the first old medial vowel (jungseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_OLD_VOWEL_START_CHARCODE = 0x1176;
+
+/** O-YAE, the last old medial vowel (jungseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_OLD_VOWEL_END_CHARCODE = 0x11a7;
+
+/** KIYEOK, the first final consonant (jongseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_FINAL_CONSONANT_START_CHARCODE = 0x11a8;
+
+/** HIEUH, the last final consonant (jongseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_FINAL_CONSONANT_END_CHARCODE = 0x11c2;
+
+/** KIYEOK-RIEUL, the first old final consonant (jongseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_OLD_FINAL_CONSONANT_START_CHARCODE = 0x11c3;
+
+/** SSANGNIEUN, the last old final consonant (jongseong) in Unicode Hangul Jamo table */
+export const HANGUL_JAMO_OLD_FINAL_CONSONANT_END_CHARCODE = 0x11ff;
+
+//========== Hangul Jamo Extended A
 /**
  * the first code in Unicode Hangul Jamo Extended A table
  * It contains the old initial consonants (choseong)
@@ -48,6 +92,7 @@ export const HANGUL_JAMO_EXTENDED_A_START_CHARCODE = 0xa960;
  */
 export const HANGUL_JAMO_EXTENDED_A_END_CHARCODE = 0xa97f;
 
+//========== Hangul Jamo Extended B
 /**
  * the first code in Unicode Hangul Jamo Extended B table
  * It contains the old medial vowels (jungseong) and old final consonants (jongseong).
