@@ -19,7 +19,7 @@ export default defineConfig([
   // es6 module (bundled)
   {
     entry: {
-      draw: "./src/index.ts",
+      hangul: "./src/index.ts",
     },
     format: ["esm"],
     outDir: "dist",
