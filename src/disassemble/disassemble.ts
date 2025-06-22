@@ -14,6 +14,8 @@ export interface DisassembledCharacter {
 /**
  * Disassemble Hangul syllable(s) into inital(choseong), medial(jungseong), and final(jongseong).
  * If input string is not a full Hangul syllable, it will be returned as either choseong(consonant) or jungseong(vowel).
+ * It cannot disassemble Hangul characters from Jamo, Jamo Extended A & B ranges. They will be returned as is.
+ * This is due to the current reliance on `es-hangul`, which does not disassemble Jamo range.
  * Non-Hangul characters will be returned as is.
  *
  * @param str - string to disassemble
@@ -49,11 +51,11 @@ export const disassemble = (
     } else {
       // 3. Hangul jaso
       const jamo = isJaOrMo(ch);
-      // FIX: disassemble complex ja(ㅅ타벇) or mo(ㅟ)
       if (jamo === "ja") {
-        // if jaum, consider it as choseong
+        // All ja is treated as choseong, not jongseong
         return {
-          choseong: ch,
+          // disassemble for consonants such as "ㄳ"
+          choseong: eshDisassemble(ch),
           jungseong: "",
           jongseong: "",
         };

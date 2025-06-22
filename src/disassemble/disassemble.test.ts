@@ -78,7 +78,6 @@ describe("disassemble()", () => {
     ]);
   });
 
-  // FIX: doesn't disassemble (es-hangul)
   test("disassembles complex choseong(initial consonant)", () => {
     expect(disassemble("ㄳ")).toEqual([
       { choseong: "ㄱㅅ", jungseong: "", jongseong: "" },
@@ -95,14 +94,17 @@ describe("disassemble()", () => {
     ]);
   });
 
-  // FIX: doesn't disassemble (es-hangul), and is not a jongseong
   test("disassembles complex jongseong(final consonant)", () => {
-    expect(disassemble("ᆰ")).toEqual([
-      { choseong: "ㄹㄱ", jungseong: "", jongseong: "" },
+    expect(disassemble("ㄼ")).toEqual([
+      { choseong: "ㄹㅂ", jungseong: "", jongseong: "" },
     ]);
+    expect(disassemble("ㄶ")).toEqual([
+      { choseong: "ㄴㅎ", jungseong: "", jongseong: "" },
+    ]);
+  });
 
-    expect(disassemble("ᆹ")).toEqual([
-      { choseong: "ㅂㅅ", jungseong: "", jongseong: "" },
-    ]);
+  // NOTE: disassemble() uses es-hangul which cannot disassemble Jamo range.
+  test("returns Jamo range characters as is. It does not know how to disassemble", () => {
+    expect(disassemble("ᄚ")).toEqual(["ᄚ"]); // 0x111A; RIEUL-HIEUH
   });
 });
