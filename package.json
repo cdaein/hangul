@@ -1,6 +1,6 @@
 {
   "name": "@daeinc/hangul",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Hangul utilities",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
