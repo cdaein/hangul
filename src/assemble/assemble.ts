@@ -2,10 +2,11 @@ import { assemble as eshAssemble } from "es-hangul";
 import { isHangul } from "../isHangul";
 
 /**
- * Assemble input string (in array form).
- * Hangul characters will be assembled into complete syllables. For non-existing combinations, they will be returned as individual jaso elements. Non-Hangul characters are returned as is.
+ * Assemble input string array.
+ * Hangul characters will be assembled into complete syllables.
+ * For non-existing combinations, they will be returned as individual jaso elements. Non-Hangul characters are returned as is.
  *
- * @param strArr - string (in array form) to assemble
+ * @param strArr - string (in array) to assemble
  *
  * @example
  * ```ts
