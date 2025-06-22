@@ -13,24 +13,63 @@ import {
 
 /**
  * Takes in a single character and determine if it's hangul or not
- * It compares with Hangul [Unicode chart](https://www.unicode.org/charts/).
- * Hangul Syllables, Jamo, Jamo Extended-A and Jamo Extended-B ranges are checked.
- * Halfwidth jamo range is not checked.
+ * It compares with Hangul [Unicode charts](https://www.unicode.org/charts/).
+ % By default, Hangul Compatibility Jamo and Syllables ranges are checked as these are the most common user inputs.
+ * To include other ranges such as Jamo, JamoExtendedA or JamoExtendedB, use the `opts` object to set the flags.
+ * Halfwidth jamo range is not included.
  *
  * @param ch - a single character to check
+ * @param opts - Optional object to set which Unicode ranges to check.
+ * @param opts.jamo - default: false
+ * @param opts.jamoExtendedA - default: false
+ * @param opts.jamoExtendedB - default: false
+ * @param opts.compatJamo - default: true
+ * @param opts.syllable - default: true
+ *
+ * @example
+ * ```
+ * const compatJamo1 = "ㄱ" // 0x3131
+ * isHangul(compatJamo1); // true
+ *
+ * const jamo1 = "ᄀ"; // 0x1100; KIYEOK looks the same but from a different table range.
+ * isHangul(jamo1); // false
+ * isHangul(jamo1, { jamo: true }); // true
+ *
+ * const jamoExtA = "ꥤ"; // 0xA964
+ * isHangul(jamoExtA, { jamoExtendedA: true }); // true
+ * 
+ * ```
  */
-export const isHangul = (ch: string) => {
+export const isHangul = (
+  ch: string,
+  opts?: {
+    jamo?: boolean;
+    jamoExtendedA?: boolean;
+    jamoExtendedB?: boolean;
+    compatJamo?: boolean;
+    syllable?: boolean;
+  },
+) => {
   if (ch.length > 1) {
     console.warn(`Only the first character ("${ch[0]}") will be processed.`);
     ch = ch[0];
   }
 
+  const options = {
+    jamo: false,
+    jamoExtendedA: false,
+    jamoExtendedB: false,
+    compatJamo: true,
+    syllable: true,
+    ...opts,
+  };
+
   return (
-    isHangulSyllable(ch) ||
-    isHangulJamo(ch) ||
-    isHangulCompatJamo(ch) ||
-    isHangulJamoExtendedA(ch) ||
-    isHangulJamoExtendedB(ch)
+    (options.syllable && isHangulSyllable(ch)) ||
+    (options.jamo && isHangulJamo(ch)) ||
+    (options.compatJamo && isHangulCompatJamo(ch)) ||
+    (options.jamoExtendedA && isHangulJamoExtendedA(ch)) ||
+    (options.jamoExtendedB && isHangulJamoExtendedB(ch))
   );
 };
 

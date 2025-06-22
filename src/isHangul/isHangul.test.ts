@@ -52,4 +52,67 @@ describe("isHangul()", () => {
     expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
     expect(consoleWarnSpy).toHaveBeenCalledWith(warnMsg(input[0]));
   });
+
+  test("returns true for a compatibility jamo character", () => {
+    const compatJamo = "ㄳ"; // from compat jamo table
+    const compatJamo2 = "ㄼ";
+    expect(isHangul(compatJamo)).toBe(true);
+    expect(isHangul(compatJamo2)).toBe(true);
+  });
+
+  test("returns true if opts.[table] is true", () => {
+    const jamo1 = "ᄀ"; // copied from Jamo range; 1100
+    const jamo2 = "ᄌ"; // copied from Jamo range; 0x110c
+    const jamoExtA = "ꥤ"; // copied from ExtendedA; rieul-kiyeok
+    const jamoExtB = "ퟐ"; // copied from ExtendedB; TIKEUT-SIOS
+    expect(
+      isHangul(jamo1, {
+        compatJamo: false,
+        jamo: true,
+      }),
+    ).toBe(true);
+    expect(
+      isHangul(jamo2, {
+        compatJamo: false,
+        jamo: true,
+      }),
+    ).toBe(true);
+    expect(
+      isHangul(jamoExtA, {
+        jamoExtendedA: true,
+      }),
+    ).toBe(true);
+    expect(
+      isHangul(jamoExtB, {
+        jamoExtendedB: true,
+      }),
+    ).toBe(true);
+  });
+
+  test("returns false if opts.[table] is false", () => {
+    const compatJamo1 = "ㄳ";
+    const compatJamo2 = "ㄼ";
+    const syllable1 = "봷";
+    const syllable2 = "꿿";
+    expect(
+      isHangul(compatJamo1, {
+        compatJamo: false,
+      }),
+    ).toBe(false);
+    expect(
+      isHangul(compatJamo2, {
+        compatJamo: false,
+      }),
+    ).toBe(false);
+    expect(
+      isHangul(syllable1, {
+        syllable: false,
+      }),
+    ).toBe(false);
+    expect(
+      isHangul(syllable2, {
+        syllable: false,
+      }),
+    ).toBe(false);
+  });
 });
