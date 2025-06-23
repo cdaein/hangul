@@ -2,12 +2,14 @@
 
 Hangul utilities
 
-## Functions
+## Installation
 
-### `assemble()`
+```sh
+npm i @daeinc/hangul
+```
 
-### `disassemble()`
+## Usage
 
-### `isHangul()`
-
-### `isJaOrMo()`
+```ts
+import { isHangul, ... } from "@daeinc/hangul"
+```
