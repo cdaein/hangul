@@ -14,7 +14,7 @@ import {
 /**
  * Takes in a single character and determine if it's hangul or not
  * It compares with Hangul [Unicode charts](https://www.unicode.org/charts/).
- % By default, Hangul Compatibility Jamo and Syllables ranges are checked as these are the most common user inputs.
+ * By default, Hangul Compatibility Jamo and Syllables ranges are checked as these are the most common user inputs.
  * To include other ranges such as Jamo, JamoExtendedA or JamoExtendedB, use the `opts` object to set the flags.
  * Halfwidth jamo range is not included.
  *
@@ -37,7 +37,7 @@ import {
  *
  * const jamoExtA = "ꥤ"; // 0xA964
  * isHangul(jamoExtA, { jamoExtendedA: true }); // true
- * 
+ *
  * ```
  */
 export const isHangul = (
