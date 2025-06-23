@@ -1,3 +1,106 @@
+/**
+ * A list of Hangul consonants that can be used as choseongs.
+ *
+ * @example
+ * ```ts
+ * ["ㄱ", "ㄲ", .. , "ㅎ"]
+ * ```
+ */
+export const CHOSEONGS = [
+  "ㄱ",
+  "ㄲ",
+  "ㄴ",
+  "ㄷ",
+  "ㄸ",
+  "ㄹ",
+  "ㅁ",
+  "ㅂ",
+  "ㅃ",
+  "ㅅ",
+  "ㅆ",
+  "ㅇ",
+  "ㅈ",
+  "ㅉ",
+  "ㅊ",
+  "ㅋ",
+  "ㅌ",
+  "ㅍ",
+  "ㅎ",
+] as const;
+
+/**
+ * A list of Hangul vowels that can be used as jungseongs.
+ *
+ * @example
+ * ```ts
+ * ["ㅏ", .. , "ㅑ", .. , "ㅜㅓ", .. , "ㅣ"]
+ * ```
+ */
+export const JUNGSEONGS = [
+  "ㅏ",
+  "ㅐ",
+  "ㅑ",
+  "ㅒ",
+  "ㅓ",
+  "ㅔ",
+  "ㅕ",
+  "ㅖ",
+  "ㅗ",
+  "ㅗㅏ",
+  "ㅗㅐ",
+  "ㅗㅣ",
+  "ㅛ",
+  "ㅜ",
+  "ㅜㅓ",
+  "ㅜㅔ",
+  "ㅜㅣ",
+  "ㅠ",
+  "ㅡ",
+  "ㅡㅣ",
+  "ㅣ",
+] as const;
+
+/**
+ * A list of Hangul consonants that can be used as jongseongs.
+ * The list is not exhaustive of all the consonants as it only contains what can be used as jongseong which is found in Hangul Syllables
+ * and the charcodes are from the Unicode Hangul Compatibility Jamo table.
+ *
+ * @example
+ * ```ts
+ * ["ㄱ", "ㄲ", .. , "ㄱㅅ", .. , "ㅎ"]
+ * ````
+ */
+export const JONGSEONGS_DISASSEMBLED = [
+  "",
+  "ㄱ",
+  "ㄲ",
+  "ㄱㅅ",
+  "ㄴ",
+  "ㄴㅈ",
+  "ㄴㅎ",
+  "ㄷ",
+  "ㄹ",
+  "ㄹㄱ",
+  "ㄹㅁ",
+  "ㄹㅂ",
+  "ㄹㅅ",
+  "ㄹㅌ",
+  "ㄹㅍ",
+  "ㄹㅎ",
+  "ㅁ",
+  "ㅂ",
+  "ㅂㅅ",
+  "ㅅ",
+  "ㅆ",
+  "ㅇ",
+  "ㅈ",
+  "ㅊ",
+  "ㅋ",
+  "ㅌ",
+  "ㅍ",
+  "ㅎ",
+] as const;
+
 //========== Hangul Syllables
 /** the first code in Unicode Hangul Syllables table */
 export const HANGUL_SYLLABLES_START_CHARCODE = 0xac00;
