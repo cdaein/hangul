@@ -17,6 +17,9 @@
   },
   "author": "Daeinc",
   "license": "MIT",
+  "dependencies": {
+    "es-hangul": "^2.3.3"
+  },
   "devDependencies": {
     "esbuild-plugin-license": "^1.2.3",
     "tsup": "^8.5.0",
@@ -39,8 +42,5 @@
   "bugs": {
     "url": "https://github.com/cdaein/hangul/issues"
   },
-  "homepage": "https://github.com/cdaein/hangul#readme",
-  "dependencies": {
-    "es-hangul": "^2.3.3"
-  }
+  "homepage": "https://github.com/cdaein/hangul#readme"
 }
