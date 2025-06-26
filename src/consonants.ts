@@ -2,9 +2,7 @@
  * A list of Hangul consonants that can be used as choseongs.
  *
  * @example
- * ```ts
  * ["ㄱ", "ㄲ", .. , "ㅎ"]
- * ```
  */
 export const CHOSEONGS = [
   "ㄱ",
@@ -32,9 +30,7 @@ export const CHOSEONGS = [
  * A list of Hangul vowels that can be used as jungseongs.
  *
  * @example
- * ```ts
  * ["ㅏ", .. , "ㅑ", .. , "ㅜㅓ", .. , "ㅣ"]
- * ```
  */
 export const JUNGSEONGS = [
   "ㅏ",
@@ -66,9 +62,7 @@ export const JUNGSEONGS = [
  * and the charcodes are from the Unicode Hangul Compatibility Jamo table.
  *
  * @example
- * ```ts
  * ["ㄱ", "ㄲ", .. , "ㄱㅅ", .. , "ㅎ"]
- * ````
  */
 export const JONGSEONGS_DISASSEMBLED = [
   "",
@@ -99,6 +93,30 @@ export const JONGSEONGS_DISASSEMBLED = [
   "ㅌ",
   "ㅍ",
   "ㅎ",
+] as const;
+
+export const VOWELS_VERTICAL = [
+  "ㅏ",
+  "ㅐ",
+  "ㅑ",
+  "ㅒ",
+  "ㅓ",
+  "ㅔ",
+  "ㅕ",
+  "ㅖ",
+  "ㅣ",
+] as const;
+
+export const VOWELS_HORIZONTAL = ["ㅗ", "ㅛ", "ㅜ", "ㅠ", "ㅡ"] as const;
+
+export const VOWELS_COMPOUND = [
+  "ㅘ",
+  "ㅙ",
+  "ㅚ",
+  "ㅝ",
+  "ㅞ",
+  "ㅟ",
+  "ㅢ",
 ] as const;
 
 //========== Hangul Syllables

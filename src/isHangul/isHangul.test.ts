@@ -7,7 +7,7 @@ import {
   afterEach,
   MockInstance,
 } from "vitest";
-import { isHangul } from ".";
+import { isConsonant, isHangul, isVowel } from ".";
 
 describe("isHangul()", () => {
   const warnMsg = (input: string) =>
@@ -60,6 +60,17 @@ describe("isHangul()", () => {
     expect(isHangul(compatJamo2)).toBe(true);
   });
 
+  test("returns false for Jamo and ExtendedA & B range if opts is not set", () => {
+    const jamo1 = "ᄀ"; // copied from Jamo range; 1100
+    const jamo2 = "ᄌ"; // copied from Jamo range; 0x110c
+    const jamoExtA = "ꥤ"; // copied from ExtendedA; rieul-kiyeok
+    const jamoExtB = "ퟐ"; // copied from ExtendedB; TIKEUT-SIOS
+    expect(isHangul(jamo1)).toBe(false);
+    expect(isHangul(jamo2)).toBe(false);
+    expect(isHangul(jamoExtA)).toBe(false);
+    expect(isHangul(jamoExtB)).toBe(false);
+  });
+
   test("returns true if opts.[table] is true", () => {
     const jamo1 = "ᄀ"; // copied from Jamo range; 1100
     const jamo2 = "ᄌ"; // copied from Jamo range; 0x110c
@@ -67,7 +78,6 @@ describe("isHangul()", () => {
     const jamoExtB = "ퟐ"; // copied from ExtendedB; TIKEUT-SIOS
     expect(
       isHangul(jamo1, {
-        compatJamo: false,
         jamo: true,
       }),
     ).toBe(true);
@@ -114,5 +124,115 @@ describe("isHangul()", () => {
         syllable: false,
       }),
     ).toBe(false);
+  });
+});
+
+describe("isConsonant", () => {
+  test("returns true if input is Hangul consonant", () => {
+    expect(isConsonant("ㄱ")).toBe(true);
+    expect(isConsonant("ㄹ")).toBe(true);
+    expect(isConsonant("ㅎ")).toBe(true);
+    expect(isConsonant("ㄲ")).toBe(true);
+    expect(isConsonant("ㅃ")).toBe(true);
+    expect(isConsonant("ㄳ")).toBe(true);
+    expect(isConsonant("ㄼ")).toBe(true);
+    expect(isConsonant("ㄿ")).toBe(true);
+  });
+
+  test("returns false if input is old Hangul consonant", () => {
+    expect(isConsonant("ㅥ")).toBe(false);
+    expect(isConsonant("ㅪ")).toBe(false);
+  });
+
+  test("returns false if input is Hangul vowel", () => {
+    expect(isConsonant("ㅏ")).toBe(false);
+    expect(isConsonant("ㅣ")).toBe(false);
+    expect(isConsonant("ㅘ")).toBe(false);
+    expect(isConsonant("ㅠ")).toBe(false);
+    expect(isConsonant("ㆇ")).toBe(false);
+  });
+
+  test("returns false if input is non-Hangul", () => {
+    expect(isConsonant("a")).toBe(false);
+    expect(isConsonant("3")).toBe(false);
+    expect(isConsonant("-")).toBe(false);
+    expect(isConsonant("&")).toBe(false);
+  });
+});
+
+describe("isVowel", () => {
+  test("returns true if input is Hangul vowel", () => {
+    expect(isVowel("ㅏ")).toBe(true);
+    expect(isVowel("ㅣ")).toBe(true);
+    expect(isVowel("ㅘ")).toBe(true);
+    expect(isVowel("ㅠ")).toBe(true);
+  });
+
+  test("returns false if input is old Hangul vowel", () => {
+    expect(isVowel("ㆇ")).toBe(false);
+    expect(isVowel("ㆉ")).toBe(false);
+  });
+
+  test("returns false if input is Hangul consonant", () => {
+    expect(isVowel("ㄱ")).toBe(false);
+    expect(isVowel("ㄹ")).toBe(false);
+    expect(isVowel("ㅎ")).toBe(false);
+    expect(isVowel("ㄲ")).toBe(false);
+    expect(isVowel("ㅃ")).toBe(false);
+    expect(isVowel("ㄳ")).toBe(false);
+    expect(isVowel("ㄼ")).toBe(false);
+    expect(isVowel("ㄿ")).toBe(false);
+  });
+
+  test("returns false if input is non-Hangul", () => {
+    expect(isVowel("a")).toBe(false);
+    expect(isVowel("3")).toBe(false);
+    expect(isVowel("-")).toBe(false);
+    expect(isVowel("&")).toBe(false);
+  });
+
+  test("tests only for types specified in `opts`", () => {
+    const vers = ["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅣ"];
+    const hors = ["ㅗ", "ㅛ", "ㅜ", "ㅠ", "ㅡ"];
+    const comps = ["ㅘ", "ㅙ", "ㅚ", "ㅝ", "ㅞ", "ㅟ", "ㅢ"];
+
+    // true
+    expect(
+      isVowel(vers[0], { vertical: true, horizontal: false, compound: false }),
+    ).toBe(true);
+    expect(
+      isVowel(vers[1], { vertical: true, horizontal: false, compound: false }),
+    ).toBe(true);
+    expect(
+      isVowel(hors[0], { vertical: false, horizontal: true, compound: false }),
+    ).toBe(true);
+    expect(
+      isVowel(hors[1], { vertical: false, horizontal: true, compound: false }),
+    ).toBe(true);
+    expect(
+      isVowel(comps[0], { vertical: false, horizontal: false, compound: true }),
+    ).toBe(true);
+    expect(
+      isVowel(comps[1], { vertical: false, horizontal: false, compound: true }),
+    ).toBe(true);
+
+    // false
+    expect(isVowel(vers[2], { vertical: false })).toBe(false);
+    expect(isVowel(vers[3], { vertical: false })).toBe(false);
+    expect(isVowel(hors[2], { horizontal: false })).toBe(false);
+    expect(isVowel(hors[3], { horizontal: false })).toBe(false);
+    expect(isVowel(comps[2], { compound: false })).toBe(false);
+    expect(isVowel(comps[3], { compound: false })).toBe(false);
+
+    // false for syllable
+    expect(isVowel("한")).toBe(false);
+    expect(isVowel("글")).toBe(false);
+
+    // false for non-Hangul
+    expect(isVowel("a")).toBe(false);
+    expect(isVowel("b")).toBe(false);
+    expect(isVowel("1")).toBe(false);
+    expect(isVowel("")).toBe(false);
+    expect(isVowel(" ")).toBe(false);
   });
 });
