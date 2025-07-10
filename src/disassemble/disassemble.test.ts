@@ -2,6 +2,12 @@ import { disassemble } from ".";
 import { describe, expect, test } from "vitest";
 
 describe("disassemble()", () => {
+  // REVIEW: what should it return in this case? Currently, it returns an empty array
+  // it makes sense as I don't want to create a bunch of empty objects.
+  test("returns an empty array if empty string is given", () => {
+    expect(disassemble("")).toEqual([]);
+  });
+
   test("handles a single or multiple Hangul syllable(s)", () => {
     expect(disassemble("꺾")).toEqual([
       {

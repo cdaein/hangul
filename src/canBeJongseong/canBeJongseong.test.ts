@@ -2,6 +2,7 @@ import { describe, expect, test } from "vitest";
 import { canBeJongseong } from ".";
 
 describe("canBeJongseong()", () => {
+  // REVIEW: this is from es-hangul.canBeJongseong(). does this behavior work for me?
   test("returns true for an empty string (=no Jongseong)", () => {
     expect(canBeJongseong("")).toBe(true);
   });

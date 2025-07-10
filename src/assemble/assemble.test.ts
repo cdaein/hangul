@@ -2,6 +2,14 @@ import { assemble } from ".";
 import { describe, test, expect } from "vitest";
 
 describe("assemble()", () => {
+  test("returns an empty string if empty string is given", () => {
+    expect(assemble(Array.from(""))).toEqual("");
+  });
+
+  test("returns an empty string filled with spaces if that is what's given", () => {
+    expect(assemble(Array.from("    "))).toEqual("    ");
+  });
+
   test("assembles multiple Hangul jaso combinations", () => {
     expect(assemble(["ㅁ", "ㅗ", "ㅏ", "ㄹ", "ㄱ"])).toBe("뫍");
     expect(assemble(["ㄱ", "ㅗ", "ㅏ"])).toBe("과");
@@ -15,6 +23,7 @@ describe("assemble()", () => {
   });
 
   test("returns non-Hangul as is", () => {
+    expect(assemble(["a", "b", "c"])).toBe("abc");
     expect(assemble(["a", "모", "ㅁ"])).toBe("a몸");
     expect(assemble(["ㅁ", "ㅣ", "ㅋ", "ㅣ", "17"])).toBe("미키17");
   });

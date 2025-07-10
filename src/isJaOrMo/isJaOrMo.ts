@@ -16,6 +16,8 @@ import {
   isHangulSyllable,
 } from "../isHangul";
 
+// TODO: check for extended jamo ranges
+
 /**
  * Given a Hangul character, check if it is a consonant(`"ja"`) or vowel(`"mo"`).
  * A full Hangul syllable returns `"syllable"`. If non-Hanul, returns `"other"`
