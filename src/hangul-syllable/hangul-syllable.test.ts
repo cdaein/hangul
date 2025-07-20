@@ -93,7 +93,7 @@ describe("HangulSyllable", () => {
     expect(clone.getDisassembled()).toEqual(s.getDisassembled());
   });
 
-  it("isEmpty() returns true for empty components", () => {
+  it("isEmpty() returns true for empty components with warning", () => {
     const s = new HangulSyllable("");
     expect(s.isEmpty()).toBe(true);
   });
