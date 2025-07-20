@@ -24,6 +24,7 @@ describe("assemble()", () => {
 
   test("returns non-Hangul as is", () => {
     expect(assemble(["a", "b", "c"])).toBe("abc");
+    expect(assemble(["a", ":", "b", "ㅈ", "c"])).toBe("a:bㅈc");
     expect(assemble(["a", "모", "ㅁ"])).toBe("a몸");
     expect(assemble(["ㅁ", "ㅣ", "ㅋ", "ㅣ", "17"])).toBe("미키17");
   });
@@ -38,5 +39,27 @@ describe("assemble()", () => {
     expect(assemble(["학교", " ", "가자", "!"])).toBe("학교 가자!");
     expect(assemble(["java", " ", "script", "좋아 "])).toBe("java script좋아 ");
     expect(assemble(["ㅁ", "ㅏ", "   ", "?"])).toBe("마   ?");
+  });
+
+  test("handles a case with no choseong", () => {
+    expect(assemble(["ㅗ", "ㅏ"])).toBe("ㅘ");
+    expect(assemble(["ㅜ", "ㅔ"])).toBe("ㅞ");
+    expect(assemble(["ㅛ", "ㅇ"])).toBe("ㅛㅇ");
+    expect(assemble(["ㅣ", "ㅂ"])).toBe("ㅣㅂ");
+    expect(assemble(["ㅏ", "ㅗ", "ㅂ"])).toBe("ㅏㅗㅂ");
+    // edge cases:
+    expect(assemble(["ㅎ", "a", "ㅜ", "ㅣ", "ㅂ"])).toBe("ㅎaㅟㅂ");
+    expect(assemble(["ㅜ", "ㅣ", "ㅂ"])).toBe("ㅟㅂ");
+    expect(assemble(["ㅜ", "ㅣ", " ", "ㅂ"])).toBe("ㅟ ㅂ");
+    expect(assemble(["ㅜ", "ㅣ", "ㅜ", "ㅣ"])).toBe("ㅟㅟ");
+    expect(assemble(["ㅜ", "ㅣ", " ", "ㅜ", "ㅣ"])).toBe("ㅟ ㅟ");
+    expect(assemble(["ㅜ", "ㅣ", "ㅇ", "ㅗ"])).toBe("ㅟ오");
+    expect(assemble(["ㅜ", "ㅣ", "ㅇ", "ㅗ", "ㅅ"])).toBe("ㅟ옷");
+    expect(assemble(["ㅜ", "ㅣ", "ㅇ", "ㅗ", "ㅅ", "ㅅ"])).toBe("ㅟ옷ㅅ");
+    expect(assemble(["ㅜ", "ㅣ", "ㅇ", "ㅗ", "ㅅ", "ㅓ"])).toBe("ㅟ오서");
+    expect(assemble(["ㅜ", "ㅜ", "ㅣ", "ㅇ", "ㅗ"])).toBe("ㅜㅟ오");
+    expect(assemble(["ㅜ", "ㄴ", "ㅜ", "ㅒ", "ㅇ", "ㅗ"])).toBe("ㅜ누ㅒ오");
+    expect(assemble(["ㅈ", "ㅕ", "ㅛ", "ㅇ"])).toBe("져ㅛㅇ");
+    expect(assemble(["ㅟㅂ"])).toBe("ㅟㅂ");
   });
 });
