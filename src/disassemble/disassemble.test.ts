@@ -100,6 +100,18 @@ describe("disassemble()", () => {
     ]);
   });
 
+  test("disassembles complex jungseong(median vowel) followed by jongseong", () => {
+    expect(disassemble("ㅟㅇ")).toEqual([
+      { choseong: "", jungseong: "ㅜㅣ", jongseong: "" },
+      { choseong: "ㅇ", jungseong: "", jongseong: "" },
+    ]);
+    expect(disassemble("ㅙㅂㅅ")).toEqual([
+      { choseong: "", jungseong: "ㅗㅐ", jongseong: "" },
+      { choseong: "ㅂ", jungseong: "", jongseong: "" },
+      { choseong: "ㅅ", jungseong: "", jongseong: "" },
+    ]);
+  });
+
   test("disassembles complex jongseong(final consonant)", () => {
     expect(disassemble("ㄼ")).toEqual([
       { choseong: "ㄹㅂ", jungseong: "", jongseong: "" },
