@@ -10,7 +10,7 @@ import { disassemble } from "../disassemble";
   disassembleToJamoString("ㅘㅇ") // "ㅗㅏㅇ"
   disassembleToJamoString("밟abc아") // "ㅂㅏㄹㅂabcㅇㅏ"
  *
- * @param phrase -
+ * @param phrase - A string to disassemble. May or may not include non-Hangul characters
  */
 export const disassembleToJamoString = (phrase: string) => {
   return disassemble(phrase)

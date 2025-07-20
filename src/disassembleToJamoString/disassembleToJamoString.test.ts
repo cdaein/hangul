@@ -6,6 +6,10 @@ describe("disassembleToJamoString()", () => {
     expect(disassembleToJamoString("가나")).toBe("ㄱㅏㄴㅏ");
   });
 
+  it("works with already disassembled phrase", () => {
+    expect(disassembleToJamoString("ㅗㅜ아")).toBe("ㅗㅜㅇㅏ");
+  });
+
   it("works with single jongseong phrase", () => {
     expect(disassembleToJamoString("발부")).toBe("ㅂㅏㄹㅂㅜ");
   });
