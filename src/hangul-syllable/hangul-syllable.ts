@@ -84,7 +84,7 @@ export class HangulSyllable {
     } else {
       this.disassembled.choseong = this.disassembled.choseong.slice(0, -1);
     }
-    this.char = assemble(this.getDisassembledString());
+    this.char = assemble(this.getDisassembledStringArray());
   }
 
   /**
@@ -98,7 +98,7 @@ export class HangulSyllable {
    */
   removeSingleJongseong() {
     this.disassembled.jongseong = this.disassembled.jongseong.slice(0, -1);
-    this.char = assemble(this.getDisassembledString());
+    this.char = assemble(this.getDisassembledStringArray());
   }
 
   /**
@@ -135,9 +135,20 @@ export class HangulSyllable {
    *
    * @example
    * const syl = new HangulSyllable("깖");
-   * syl.getDisassembledString() // ["ㄲ", "ㅏ", "ㄹㅁ"]
+   * syl.getDisassembledStringArray() // ["ㄲ", "ㅏ", "ㄹㅁ"]
    */
-  getDisassembledString(): string[] {
+  getDisassembledStringArray(): string[] {
     return Object.values(this.disassembled).map((v) => v);
+  }
+
+  /**
+   * Returns a flattened string each Hangul component. Note that a double Jongseong is broken down.
+   *
+   * @example
+   * const syl = new HangulSyllable("깖");
+   * syl.getDisassembledString() // "ㄲㅏㄹㅁ"
+   */
+  getDisassembledString(): string {
+    return Object.values(this.disassembled).join("");
   }
 }

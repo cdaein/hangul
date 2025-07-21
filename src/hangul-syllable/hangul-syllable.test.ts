@@ -192,8 +192,23 @@ describe("HangulSyllable", () => {
     });
   });
 
-  it("getDisassembledString() returns components as array", () => {
+  it("getDisassembledStringArray() returns components as array", () => {
     const s = new HangulSyllable("깖");
-    expect(s.getDisassembledString()).toEqual(["ㄲ", "ㅏ", "ㄹㅁ"]);
+    expect(s.getDisassembledStringArray()).toEqual(["ㄲ", "ㅏ", "ㄹㅁ"]);
+  });
+
+  it("getDisassembledString() returns components as flattened string", () => {
+    {
+      const s = new HangulSyllable("깖");
+      expect(s.getDisassembledString()).toEqual("ㄲㅏㄹㅁ");
+    }
+    {
+      const s = new HangulSyllable("밟");
+      expect(s.getDisassembledString()).toEqual("ㅂㅏㄹㅂ");
+    }
+    {
+      const s = new HangulSyllable("솹");
+      expect(s.getDisassembledString()).toEqual("ㅅㅗㅏㅂ");
+    }
   });
 });
