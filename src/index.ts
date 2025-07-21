@@ -5,5 +5,6 @@ export * from "./canBeJongseong";
 export * from "./disassemble";
 export * from "./disassembleToJamoString";
 export * from "./hangul-syllable";
+export * from "./isFirstSyllableReady";
 export * from "./isHangul";
 export * from "./isJaOrMo";
